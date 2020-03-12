@@ -8,13 +8,13 @@
     [fairBill removeObjectAtIndex:index];
     int fullSum = 0;
     for (int i = 0; i < [fairBill count]; i++) {
-        fullSum = fullSum + [fairBill[i] integerValue];
+        fullSum = fullSum + (int)[fairBill[i] integerValue];
     }
     int billActual = fullSum / 2;
     if (billActual == [sum integerValue]) {
         return @"Bon Appetit";
     } else {
-        int diff = ([sum integerValue] - billActual);
+        int diff = (int)([sum integerValue] - billActual);
         NSString *diffString = [NSString stringWithFormat:@"%d", diff];
         return diffString;
     }

@@ -15,7 +15,7 @@
     }
 
     for (int i = 0; i < [arrayOfDigital count]/2; i++) {
-        if ([arrayOfDigital count] % 2 == nil) {
+        if ([arrayOfDigital count] % 2 == 0) {
             NSInteger secondObjectIndex = [arrayOfDigital count] - 1 - i;
             if (arrayOfDigital[i] != arrayOfDigital[secondObjectIndex]) {
                 countChanges += 1;
@@ -60,7 +60,7 @@
     }
 }
 
-+ (NSArray<NSString*>*)increasePalidrom:(NSArray*)array changes:(NSInteger)changes arrayOfPosition:(NSArray*)arrayPositions {
++ (NSMutableArray<NSString*>*)increasePalidrom:(NSArray*)array changes:(NSInteger)changes arrayOfPosition:(NSArray*)arrayPositions {
     NSInteger countReplace = changes;
     NSMutableArray *changingArray = [[NSMutableArray alloc] initWithArray:array];
 
