@@ -2,27 +2,40 @@
 
 @implementation T1Array
 
+static NSMutableArray *happyArray = nil;
+
 // Complete the following fuction
 - (NSArray *)convertToHappy:(NSArray *)sadArray {
-    NSMutableArray * newArray = [[NSMutableArray alloc] init];
+    happyArray = [[NSMutableArray alloc] init];
+
+    NSInteger changes = 1;
     if ([sadArray count] != 0) {
-        for (int i = 0; i <= [sadArray count] - 1; i++) {
-            if (i > 0 && i != [sadArray count] - 1) {
-                NSInteger elementsSum = (long)[sadArray[i-1] integerValue] + (long)[sadArray[i+1] integerValue];
-                if (elementsSum > (long)[sadArray[i] integerValue]) {
-                    [newArray addObject:sadArray[i]];
-                }
+        happyArray = [[NSMutableArray alloc] initWithArray:sadArray];
+        while (changes != 0) {
+            changes = [T1Array checkArray:happyArray];
+        }
+    }
+    return happyArray;
+}
+
++ (NSInteger)checkArray:(NSArray*)array {
+    NSInteger changeElement = 0;
+    happyArray = [[NSMutableArray alloc] init];
+    if ([array count] != 0) {
+        for (int i = 0; i <= [array count] - 1; i++) {
+            if (i == 0 || i == [array count] - 1) {
+                [happyArray addObject:array[i]];
             } else {
-                [newArray addObject:sadArray[i]];
-            }
-            if ([newArray count] > 3) {
-                if ((long)[newArray[[newArray count] - 2] integerValue] > (long)[newArray[[newArray count] - 1] integerValue] + (long)[newArray[[newArray count] - 3] integerValue]) {
-                    [newArray removeObjectAtIndex:[newArray count] - 2];
+                NSInteger elementsSum = (long)[array[i-1] integerValue] + (long)[array[i+1] integerValue];
+                if (elementsSum > [array[i] intValue]) {
+                    [happyArray addObject:array[i]];
+                } else {
+                    changeElement += 1;
                 }
             }
         }
     }
-    return newArray;
+    return changeElement;
 }
 
 @end
