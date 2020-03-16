@@ -63,17 +63,31 @@
 + (NSMutableArray<NSString*>*)increasePalidrom:(NSArray*)array changes:(NSInteger)changes arrayOfPosition:(NSArray*)arrayPositions {
     NSInteger countReplace = changes;
     NSMutableArray *changingArray = [[NSMutableArray alloc] initWithArray:array];
+    NSMutableArray *replacePosition = [[NSMutableArray alloc] initWithArray:arrayPositions];
 
-        for (int i = 0; i < arrayPositions.count; i++) {
-            while (countReplace >= 1) {
-                NSInteger index = [arrayPositions[i] intValue];
-                if (![changingArray[index] isEqual:@"9"]) {
-                    changingArray[index] = @"9";
-                    changingArray[[changingArray count] - index - 1] = @"9";
-                    countReplace = countReplace - 1;
+    for (int i = 0; i < [array count] - 1; i++) {
+            if (countReplace >= 2) {
+                if (![changingArray[i] isEqual:@"9"]) {
+                    changingArray[i] = @"9";
+                    changingArray[[changingArray count] - i - 1] = @"9";
+                    if ([replacePosition containsObject:[NSNumber numberWithInt:i]]) {
+                        countReplace = countReplace - 1;
+                        [replacePosition removeObject:[NSNumber numberWithInt:i]];
+                    } else {
+                        countReplace = countReplace - 2;
+                    }
+                }
+            } else if (countReplace == 1) {
+                for (int j = 0; j < replacePosition.count; j++) {
+                    NSInteger index = [arrayPositions[j] intValue];
+                    if (![changingArray[index] isEqual:@"9"] && countReplace > 0) {
+                        changingArray[index] = @"9";
+                        changingArray[[changingArray count] - index - 1] = @"9";
+                        countReplace = countReplace - 1;
+                    }
                 }
             }
-        }
+    }
     return changingArray;
 }
 
